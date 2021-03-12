@@ -1,7 +1,8 @@
 const express = require('express');
 const sequelize = require('./config/connection');
-
-// const Book = require('your models go here!');
+const Department = require('./models/department');
+const Employee = require('./models/employee');
+const Role = require('./models/role');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
