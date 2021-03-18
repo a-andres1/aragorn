@@ -3,6 +3,7 @@ const inquirer = require('inquirer');
 // adds fs package
 const fs = require('fs');
 const { listenerCount } = require('events');
+const Connection = require('mysql2/typings/mysql/lib/Connection');
 
 var functionList = [
     {
@@ -64,7 +65,7 @@ var functionList = [
 ];
 
 
-// begin inquirer prompts
+function listPrompt() {// begin inquirer prompts
 inquirer
     .prompt([
         {
@@ -100,7 +101,7 @@ inquirer
         callIt(functionName);
 
 
-    });
+    });}
 
 function callIt(functionName) {
     for (i = 0; i < functionList.length; i++)
@@ -110,16 +111,29 @@ function callIt(functionName) {
 };
 
 function viewAllDepartments() {
-    console.log("you hit view all departments")
-
+    console.log("you hit view all departments");
+    connection.query("SELECT * FROM department", function (err, result){
+        if (err) throw err; 
+        console.log(result);
+    });
+    
+ 
 };
 
 function viewAllRoles() {
-    console.log("view all roles")
+    console.log("you hit view all roles")
+    connection.query("SELECT * FROM role", function (err, result){
+        if (err) throw err; 
+        console.log(result);
+    });
 
 };
 function viewAllEmployees() {
-    console.log("view all emps")
+    console.log("you hit view all emps")
+    connection.query("SELECT * FROM employee", function (err, result){
+        if (err) throw err; 
+        console.log(result);
+    });
 
 };
 
