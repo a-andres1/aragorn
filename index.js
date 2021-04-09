@@ -7,6 +7,7 @@ const connection = require('./config/connection');
 const { exit } = require('process');
 const { Server } = require('http');
 
+// an array to call fuctions
 var functionList = [
     {
         string: "View All Departments",
@@ -16,10 +17,6 @@ var functionList = [
         string: "View All Employees",
         call: viewAllEmployees,
     },
-    // {
-    //     string: "viewEmployeesByManager",
-    //     call: viewEmployeesByManager,
-    // },
     {
         string: "Add Employee",
         call: addEmployee,
@@ -36,30 +33,6 @@ var functionList = [
         string: "Update Employee Role",
         call: updateEmployeeRole,
     },
-    // {
-    //     string: "updateManager",
-    //     call: updateManager,
-    // },
-    // {
-    //     string: "deleteDepartment",
-    //     call: deleteDepartment,
-    // },
-    // {
-    //     string: "deleteRole",
-    //     call: deleteRole,
-    // },
-    // {
-    //     string: "deleteEmployee",
-    //     call: deleteEmployee,
-    // },
-    // {
-    //     string: "viewDepartmenBudget",
-    //     call: viewDepartmenBudget,
-    // },
-    // {
-    //     string: "deleteEmployee",
-    //     call: deleteEmployee,
-    // },
     {
         string: "View All Roles",
         call: viewAllRoles,
@@ -70,11 +43,13 @@ var functionList = [
     },
 ];
 
+// function I made that is called from the server so that when the server starts the prompts start
 var call = function serverCall(){
     listPrompt();
-}
+};
 
-function listPrompt() {// begin inquirer prompts
+// begin inquirer prompts
+function listPrompt() {
 inquirer
     .prompt([
         {
@@ -90,13 +65,6 @@ inquirer
                 "Add Role",
                 "Update Employee Role",
                 "EXIT"
-                // EVERYTHING PAST HERE IS BONUS
-                // "Update Manager",
-                // "Delete Department",
-                // "Delete Role",
-                // "Delete Employee",
-                // "View Department Budget",
-                // "View Employees By Manager"
             ]
         }
     ]).then(function (data) {
@@ -106,6 +74,7 @@ inquirer
 
     });}
 
+// function to call functions, loops through the functionName array
 function callIt(functionName) {
     for (i = 0; i < functionList.length; i++)
         if (functionName === functionList[i].string) {
@@ -113,16 +82,16 @@ function callIt(functionName) {
         };
 };
 
+// function to show all departments in the console
 function viewAllDepartments() {
     connection.query("SELECT * FROM employee_db.department", function (err, result){
         if (err) throw err; 
         console.table(result);
         listPrompt();
     });
-    
- 
 };
 
+// function to show all roles in the console
 function viewAllRoles() {
     console.log("you hit view all roles")
     connection.query('SELECT * FROM employee_db.role', function (err, result, fields){
@@ -130,8 +99,9 @@ function viewAllRoles() {
         console.table(result);
         listPrompt();
     });
-
 };
+
+// function to show all employees in the console
 function viewAllEmployees() {
     console.log("you hit view all emps")
     connection.query("SELECT * FROM employee_db.employee", function (err, result){
@@ -139,9 +109,9 @@ function viewAllEmployees() {
         console.table(result);
         listPrompt();
     });
-
 };
 
+// function to add employees
 function addEmployee() {
     console.log("add employee")
     inquirer.prompt([
@@ -175,8 +145,9 @@ function addEmployee() {
         // connection.query('INSERT INTO employee VALUES);
         listPrompt();
     });
-
 };
+
+// function to add departments
 function addDepartment() {
     console.log("add department")
     inquirer.prompt([
@@ -195,8 +166,9 @@ function addDepartment() {
         // connection.query('INSERT INTO department VALUES);
         listPrompt();
     });
-
 };
+
+// function to add roles
 function addRole() {
     console.log("add role")
     inquirer.prompt([
@@ -225,8 +197,9 @@ function addRole() {
         // connection.query('INSERT INTO employee VALUES);
         listPrompt();
     });
-
 };
+
+// function to update employee roles
 function updateEmployeeRole() {
     console.log("update emp role")
     inquirer.prompt([
@@ -255,37 +228,15 @@ function updateEmployeeRole() {
         // connection.query('INSERT INTO role VALUES);
         listPrompt();
     });
-
 };
 
+// function to exit
 function exitPrompt(){
     process.exit();
 }
 
-// THIS IS BONUS TERRITORY
-// function updateManager() {
-//     console.log("update man")
 
-// };
-// function deleteDepartment() {
-//     console.log("del dept")
-
-// };
-// function deleteRole() {
-//     console.log("del role")
-
-// };
-// function deleteEmployee() {
-//     console.log("del emp")
-
-// };
-// function viewEmployeesByManager() {
-//     console.log("view all emps by man")
-
-// };
-// function viewDepartmenBudget() {
-//     console.log("view dept budget")
-
-// };
 
 module.exports = call;
+
+
