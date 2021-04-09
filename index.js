@@ -9,11 +9,11 @@ const { Server } = require('http');
 
 var functionList = [
     {
-        string: "viewAllDepartments",
+        string: "View All Departments",
         call: viewAllDepartments,
     },
     {
-        string: "viewAllEmployees",
+        string: "View All Employees",
         call: viewAllEmployees,
     },
     // {
@@ -21,19 +21,19 @@ var functionList = [
     //     call: viewEmployeesByManager,
     // },
     {
-        string: "addEmployee",
+        string: "Add Employee",
         call: addEmployee,
     },
     {
-        string: "addDepartment",
+        string: "Add Department",
         call: addDepartment,
     },
     {
-        string: "addRole",
+        string: "Add Role",
         call: addRole,
     },
     {
-        string: "updateEmployeeRole",
+        string: "Update Employee Role",
         call: updateEmployeeRole,
     },
     // {
@@ -61,7 +61,7 @@ var functionList = [
     //     call: deleteEmployee,
     // },
     {
-        string: "viewAllRoles",
+        string: "View All Roles",
         call: viewAllRoles,
     },
     {
@@ -101,14 +101,7 @@ inquirer
         }
     ]).then(function (data) {
         console.log(data.init);
-        // can I put the functions in an array that this loops through, matches and then spits out? 
-        // creates variable to manipulate the string
-        const glue = data.init.split(' ').join('');
-        // essentially I used this to create camelCase, it will make my function names long, but I think my code will be less dry
-        const functionName = glue.toLowerCase().charAt(0) + glue.substring(1);
-        console.log(functionName);
-
-        callIt(functionName);
+        callIt(data.init);
 
 
     });}
@@ -229,7 +222,7 @@ function addRole() {
         },
     ]).then(function(data){
         console.table(data);
-        // connection.query('INSERT INTO employees VALUES);
+        // connection.query('INSERT INTO employee VALUES);
         listPrompt();
     });
 
@@ -259,7 +252,7 @@ function updateEmployeeRole() {
         },
     ]).then(function(data){
         console.table(data);
-        // connection.query('INSERT INTO employees VALUES);
+        // connection.query('INSERT INTO role VALUES);
         listPrompt();
     });
 
