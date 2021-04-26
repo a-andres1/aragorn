@@ -38,13 +38,12 @@ const orm = {
             console.log(data)
         })
     },
-    {
-    exit: function{
+    
+    exit: function(){
         // function to exit
         process.exit();
     }
-}
-    }
+
 }
 
 module.exports = orm
