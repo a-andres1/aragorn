@@ -1,62 +1,16 @@
-// adds inquirer package
-const inquirer = require('inquirer');
-// adds fs package
-const fs = require('fs');
-const { listenerCount } = require('events');
-const connection = require('./config/connection');
-const { exit } = require('process');
-const { Server } = require('http');
-const { callbackify } = require('util');
+const inquirer = require("inquirer");
+const orm = require("./config/orm.js")
+let deptArr = ["Marketing", "HR", "Sales"]
+//  roleArr, employeeArr;
 
-// an array to call fuctions
-var functionList = [
-    {
-        string: "View All Departments",
-        call: viewAllDepartments,
-    },
-    {
-        string: "View All Employees",
-        call: viewAllEmployees,
-    },
-    {
-        string: "Add Employee",
-        call: addEmployee,
-    },
-    {
-        string: "Add Department",
-        call: addDepartment,
-    },
-    {
-        string: "Add Role",
-        call: addRole,
-    },
-    {
-        string: "Update Employee Role",
-        call: updateEmployeeRole,
-    },
-    {
-        string: "View All Roles",
-        call: viewAllRoles,
-    },
-    {
-        string: "EXIT",
-        call: exitPrompt,
-    },
-];
-
-// function I made that is called from the server so that when the server starts the prompts start
-var call = function serverCall(){
-    listPrompt();
-};
-
-// begin inquirer prompts
-function listPrompt() {
-inquirer
-    .prompt([
+function init() {
+    // deptArr = orm.loadDept()
+    // console.log(deptArr)
+    // console.log(orm.loadDept())
+    inquirer.prompt([
         {
-            name: "init",
             type: "list",
-            message: "What would you like to do?",
+            message: "What up?",
             choices: [
                 "View All Departments",
                 "View All Roles",
@@ -66,49 +20,52 @@ inquirer
                 "Add Role",
                 "Update Employee Role",
                 "EXIT"
-            ]
+            ],
+            name:"choice"
         }
-    ]).then(function (data) {
-        callIt(data.init);
-    });}
+    ]).then(({choice}) => {
+        if(choice == "View Departments") {
+            orm.viewDept();
+            init()
+        }else if (choice == "Add Role") {
+            // calls function below to get the necessary data
+            askRole()
+        }
+    })
+}
 
-// function to call functions, loops through the functionName array
-function callIt(functionName) {
-    for (i = 0; i < functionList.length; i++)
-        if (functionName === functionList[i].string) {
-            return functionList[i].call();
-        };
-};
 
-// function to show all departments in the console
-function viewAllDepartments() {
-    connection.query("SELECT * FROM employee_db.department", function (err, result, fields){
-        if (err) 
-            throw err; 
-        console.table(result, fields);
-        listPrompt();
-    });
-};
+function askRole (){
+    console.log(deptArr)
+    inquirer.prompt([
+        {
+            message: "Role Title",
+            name: "title"
+        },
+        {
+            message: "Salary?",
+            name: "salary"
+        },
+        {
+            type: "list",
+            message: "Department?",
+            choices: deptArr,
+            name: "departmentString"
+        }
+    ]).then (res => {
+        // passes the data to the orm file to make the server call and add the data
+        orm.addRole(res.title, res.salary, deptArr.indexOf(res.departmentString) + 1)
+    })
+}
+init()
+// 
+// 
+// 
+// 
+// 
 
-// function to show all roles in the console
-function viewAllRoles() {
-    console.log("you hit view all roles")
-    connection.query('SELECT * FROM employee_db.role', function (err, result, fields){
-        if (err) throw err; 
-        console.table(result);
-        listPrompt();
-    });
-};
 
-// function to show all employees in the console
-function viewAllEmployees() {
-    console.log("you hit view all emps")
-    connection.query("SELECT * FROM employee_db.employee", function (err, result){
-        if (err) throw err; 
-        console.table(result);
-        listPrompt();
-    });
-};
+
 
 // function to add employees
 function addEmployee() {
@@ -169,36 +126,7 @@ function addDepartment() {
     });
 };
 
-// function to add roles
-function addRole() {
-    console.log("add role")
-    inquirer.prompt([
-        {
-            name: "id",
-            type: "input",
-            message: "What is the role id?"
-        },
-        {
-            name: "title",
-            type: "input",
-            message: "What is the role title?"
-        },
-        {
-            name: "salary",
-            type: "input",
-            message: "What is the role's salary?"
-        },
-        {
-            name: "deptid",
-            type: "input",
-            message: "What is the role's department's id?"
-        },
-    ]).then(function(data){
-        console.table(data);
-        // connection.query('INSERT INTO employee VALUES);
-        listPrompt();
-    });
-};
+
 
 // function to update employee roles
 function updateEmployeeRole() {
@@ -231,10 +159,7 @@ function updateEmployeeRole() {
     });
 };
 
-// function to exit
-function exitPrompt(){
-    process.exit();
-}
+
 
 
 
