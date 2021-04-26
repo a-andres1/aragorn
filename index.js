@@ -6,6 +6,7 @@ const { listenerCount } = require('events');
 const connection = require('./config/connection');
 const { exit } = require('process');
 const { Server } = require('http');
+const { callbackify } = require('util');
 
 // an array to call fuctions
 var functionList = [
@@ -68,10 +69,7 @@ inquirer
             ]
         }
     ]).then(function (data) {
-        console.log(data.init);
         callIt(data.init);
-
-
     });}
 
 // function to call functions, loops through the functionName array
@@ -84,9 +82,10 @@ function callIt(functionName) {
 
 // function to show all departments in the console
 function viewAllDepartments() {
-    connection.query("SELECT * FROM employee_db.department", function (err, result){
-        if (err) throw err; 
-        console.table(result);
+    connection.query("SELECT * FROM employee_db.department", function (err, result, fields){
+        if (err) 
+            throw err; 
+        console.table(result, fields);
         listPrompt();
     });
 };

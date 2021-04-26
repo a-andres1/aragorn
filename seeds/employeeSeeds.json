@@ -4,21 +4,23 @@
         "first_name": "Bob",
         "last_name": "Saggett",
         "role_id": "1",
-        "manager_id": "1"
-    },
+
+
+        "manager_id":"1"
+   },
     {
         "employee_id": "2",
         "first_name": "Kris",
         "last_name": "Kristofferson",
         "role_id": "2",
-        "manager_id": "1"
+        "manager_id":"1"
     },
+
     {
         "employee_id": "3",
         "first_name": "Val",
         "last_name": "Kilmer",
         "role_id": "3",
-        "manager_id": "2"
+        "manager_id":"2"
     }
-
 ]
