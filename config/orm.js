@@ -24,6 +24,19 @@ const orm = {
             // console.log(arr)
             return {array: arr}
         })
+    },
+
+    addRole: function (title, salary, departmentId){
+        console.log(title, salary, departmentId)
+
+        const queryString = `
+        INSERT INTO roles (title, salary, department_id)
+        VALUES (?,?,?)`
+
+        connection.query(queryString, [title, salary, departmentId], (err, data) => {
+            if (err) throw err;
+            console.log(data)
+        })
     }
 }
 
