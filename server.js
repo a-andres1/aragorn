@@ -3,7 +3,6 @@ const sequelize = require('./config/connection');
 const Department = require('./models/department');
 const Employee = require('./models/employee');
 const Role = require('./models/role');
-const prompt = require('./index');
 const call = require('./index');
 
 const app = express();
