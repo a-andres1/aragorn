@@ -1,6 +1,7 @@
 const connection = require("./connection.js");
 
 const orm = {
+    // calls server to view departments
     viewDept: function () {
         const queryString = `SELECT * FROM department`
 
@@ -12,7 +13,7 @@ const orm = {
             // console.log(data)
         })
     },
-
+// function to get the updated list of departments from the server
     loadDept: function () {
         const queryString = `SELECT * FROM department`
         const arr = []
@@ -25,7 +26,7 @@ const orm = {
             return { array: arr }
         })
     },
-
+// pushes data to the server
     addRole: function (title, salary, departmentId) {
         console.log(title, salary, departmentId)
 
