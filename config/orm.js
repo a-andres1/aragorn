@@ -1,7 +1,7 @@
 const connection = require("./connection.js");
 
 const orm = {
-    viewDept: function(){
+    viewDept: function () {
         const queryString = `SELECT * FROM department`
 
         connection.query(queryString, (err, data) => {
@@ -13,7 +13,7 @@ const orm = {
         })
     },
 
-    loadDept: function() {
+    loadDept: function () {
         const queryString = `SELECT * FROM department`
         const arr = []
         connection.query(queryString, (err, data) => {
@@ -22,11 +22,11 @@ const orm = {
                 arr.push(element.dep_name)
             });
             // console.log(arr)
-            return {array: arr}
+            return { array: arr }
         })
     },
 
-    addRole: function (title, salary, departmentId){
+    addRole: function (title, salary, departmentId) {
         console.log(title, salary, departmentId)
 
         const queryString = `
@@ -37,6 +37,13 @@ const orm = {
             if (err) throw err;
             console.log(data)
         })
+    },
+    {
+    exit: function{
+        // function to exit
+        process.exit();
+    }
+}
     }
 }
 
