@@ -139,9 +139,10 @@ function addEmployee() {
             type: "input",
             message: "What is the employee's manager's id?"
         },
-    ]).then(function(data){
-        console.table(data);
+    ]).then(function({id, firtst_name, last_name, role_name, manager_id}){
+        console.log(id + firtst_name + last_name + role_name + manager_id);
         // connection.query('INSERT INTO employee VALUES);
+        
         listPrompt();
     });
 };
@@ -160,9 +161,10 @@ function addDepartment() {
             type: "input",
             message: "What is the department name?"
         },
-    ]).then(function(data){
-        console.table(data);
-        // connection.query('INSERT INTO department VALUES);
+    ]).then(function({id, name}){
+        console.table({id, name});
+        connection.query("INSERT INTO employee_db.department VALUES ?", ("id", "name"), function (err, result) 
+        {if (err) throw err});
         listPrompt();
     });
 };
