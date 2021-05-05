@@ -13,7 +13,31 @@ const orm = {
             // console.log(data)
         })
     },
-// function to get the updated list of departments from the server
+    // function to view employees
+    viewEmp: function () {
+        const queryString = `SELECT * FROM employees`
+
+        connection.query(queryString, (err, data) => {
+            if (err) throw err;
+            console.log("\n")
+            console.table(data)
+            console.log("\n")
+            // console.log(data)
+        })
+    },
+    // fuction to view roles
+    viewRoles: function () {
+        const queryString = `SELECT * FROM roles`
+
+        connection.query(queryString, (err, data) => {
+            if (err) throw err;
+            console.log("\n")
+            console.table(data)
+            console.log("\n")
+            // console.log(data)
+        })
+    },
+    // function to get the updated list of departments from the server
     loadDept: function () {
         const queryString = `SELECT * FROM department`
         const arr = []
@@ -26,7 +50,7 @@ const orm = {
             return { array: arr }
         })
     },
-// pushes data to the server
+    // pushes data to the server
     addRole: function (title, salary, departmentId) {
         console.log(title, salary, departmentId)
 
@@ -39,12 +63,8 @@ const orm = {
             console.log(data)
         })
     },
-    
-    exit: function(){
-        // function to exit
-        process.exit();
-    }
+
 
 }
 
-module.exports = orm
+module.exports = orm;
