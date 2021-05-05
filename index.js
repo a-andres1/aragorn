@@ -27,9 +27,33 @@ function init() {
         if(choice == "View Departments") {
             orm.viewDept();
             init()
-        }else if (choice == "Add Role") {
+        }
+        else if(choice == "View Employees") {
+            orm.viewEmp();
+            init()
+        }
+        else if(choice == "View Roles") {
+            orm.viewRoles();
+            init()
+        }
+        else if (choice == "Add Role") {
             // calls function below to get the necessary data
-            askRole()
+            askRole();
+        }
+        else if (choice == "Add Department") {
+            // calls function below to get the necessary data
+            askDept();
+        }
+        else if (choice == "Add Employee") {
+            // calls function below to get the necessary data
+            askEmp();
+        }
+        else if (choice == "Update Employee") {
+            // calls function below to get the necessary data
+            updateEmp();
+        }
+        else if (choice == "Exit"){
+            process.exit();
         }
     })
 }
@@ -56,7 +80,15 @@ function askRole (){
         // passes the data to the orm file to make the server call and add the data
         orm.addRole(res.title, res.salary, deptArr.indexOf(res.departmentString) + 1)
     })
+};
+
+// update employee
+function updateEmp(){
+    // this will need another list like in departments
 }
+
+
+// initialize app
 init()
 // 
 // 
@@ -68,7 +100,7 @@ init()
 
 
 // function to add employees
-function addEmployee() {
+function askEmp() {
     console.log("add employee")
     inquirer.prompt([
         {
@@ -96,16 +128,16 @@ function addEmployee() {
             type: "input",
             message: "What is the employee's manager's id?"
         },
-    ]).then(function({id, firtst_name, last_name, role_name, manager_id}){
-        console.log(id + firtst_name + last_name + role_name + manager_id);
-        // connection.query('INSERT INTO employee VALUES);
-        
-        listPrompt();
-    });
+    ]).then (res => {
+        // passes the data to the orm file to make the server call and add the data
+        orm.addEmp(res.title, res.salary, deptArr.indexOf(res.departmentString) + 1)
+    })
+        init();
+    
 };
 
 // function to add departments
-function addDepartment() {
+function askDept() {
     console.log("add department")
     inquirer.prompt([
         {
@@ -159,10 +191,5 @@ function updateEmployeeRole() {
     });
 };
 
-
-
-
-
-module.exports = call;
 
 

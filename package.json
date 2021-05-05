@@ -1,31 +1,15 @@
 {
-  "name": "aragorn",
+  "name": "tutorial-version",
   "version": "1.0.0",
-  "description": "an app to help you track your employees",
-  "main": "server.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "seeds": "node seeds/seed.js"
-
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/a-andres1/aragorn.git"
-  },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
     "inquirer": "^8.0.0",
-    "mysql2": "^2.2.5"
-    
-
-  },
-  "bugs": {
-    "url": "https://github.com/a-andres1/aragorn/issues"
-  },
-  "homepage": "https://github.com/a-andres1/aragorn#readme"
+    "mysql": "^2.18.1"
+  }
 }
