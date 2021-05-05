@@ -6,16 +6,18 @@ const orm = {
         const queryString = `SELECT * FROM department`
 
         connection.query(queryString, (err, data) => {
+            console.log(data);
             if (err) throw err;
             console.log("\n")
             console.table(data)
             console.log("\n")
             // console.log(data)
-        })
+        });
     },
+
     // function to view employees
     viewEmp: function () {
-        const queryString = `SELECT * FROM employees`
+        const queryString = `SELECT * FROM employee`
 
         connection.query(queryString, (err, data) => {
             if (err) throw err;
@@ -23,8 +25,9 @@ const orm = {
             console.table(data)
             console.log("\n")
             // console.log(data)
-        })
+        });
     },
+
     // fuction to view roles
     viewRoles: function () {
         const queryString = `SELECT * FROM roles`
@@ -35,8 +38,9 @@ const orm = {
             console.table(data)
             console.log("\n")
             // console.log(data)
-        })
+        });
     },
+
     // function to get the updated list of departments from the server
     loadDept: function () {
         const queryString = `SELECT * FROM department`
@@ -48,8 +52,9 @@ const orm = {
             });
             // console.log(arr)
             return { array: arr }
-        })
+        });
     },
+
     // pushes data to the server
     addRole: function (title, salary, departmentId) {
         console.log(title, salary, departmentId)
@@ -61,7 +66,21 @@ const orm = {
         connection.query(queryString, [title, salary, departmentId], (err, data) => {
             if (err) throw err;
             console.log(data)
-        })
+        });
+    },
+
+    // pushes data to the server
+    addDept: function (name) {
+        console.log(name)
+
+        const queryString = `
+        INSERT INTO department (dep_name)
+        VALUES (?)`
+
+        connection.query(queryString, [name], (err, data) => {
+            if (err) throw err;
+            console.log(data)
+        });
     },
 
 
