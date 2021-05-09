@@ -1,0 +1,72 @@
+var functionList = [
+    {
+        string: "View All Departments",
+        call: viewAllDepartments,
+    },
+    {
+        string: "View All Employees",
+        call: viewAllEmployees,
+    },
+    {
+        string: "Add Employee",
+        call: addEmployee,
+    },
+    {
+        string: "Add Department",
+        call: addDepartment,
+    },
+    {
+        string: "Add Role",
+        call: addRole,
+    },
+    {
+        string: "Update Employee Role",
+        call: updateEmployeeRole,
+    },
+    {
+        string: "View All Roles",
+        call: viewAllRoles,
+    },
+    {
+        string: "EXIT",
+        call: exitPrompt,
+    },
+];
+
+// function I made that is called from the server so that when the server starts the prompts start
+var call = function serverCall(){
+    listPrompt();
+};
+
+// begin inquirer prompts
+function listPrompt() {
+inquirer
+    .prompt([
+        {
+            name: "init",
+            type: "list",
+            message: "What would you like to do?",
+            choices: [
+                "View All Departments",
+                "View All Roles",
+                "View All Employees",                
+                "Add Employee",
+                "Add Department",
+                "Add Role",
+                "Update Employee Role",
+                "EXIT"
+            ]
+        }
+    ]).then(function (data) {
+        callIt(data.init);
+    });}
+
+// function to call functions, loops through the functionName array
+function callIt(functionName) {
+    for (i = 0; i < functionList.length; i++)
+        if (functionName === functionList[i].string) {
+            return functionList[i].call();
+        };
+};
+
+
