@@ -6,7 +6,6 @@ const orm = {
         const queryString = `SELECT * FROM department`
 
         connection.query(queryString, (err, data) => {
-            console.log(data);
             if (err) throw err;
             console.log("\n")
             console.table(data)
@@ -43,15 +42,14 @@ const orm = {
 
     // function to get the updated list of departments from the server
     loadDept: function () {
-        const queryString = `SELECT * FROM department`
-        const arr = []
+        const queryString = `SELECT * FROM department WHERE data ->> $.name `;
+        const arr = [];
         connection.query(queryString, (err, data) => {
             if (err) throw err;
-            data.forEach(element => {
-                arr.push(element.dep_name)
-            });
-            // console.log(arr)
-            return { array: arr }
+            // data.forEach(element => {
+            //     arr.push(element)
+            // });
+            console.table(data);
         });
     },
 
@@ -68,18 +66,30 @@ const orm = {
             console.log(data)
         });
     },
+ 
+    // pushes data to the server
+    addEmp: function (firstName, lastName, role) {
+        console.log(firstName, lastName, role)
+
+        const queryString = `
+        INSERT INTO employee (first_name, last_name, role_id)
+        VALUES (?,?,?)`
+
+        connection.query(queryString, [firstName, lastName, role], (err, data) => {
+            if (err) throw err;
+            console.log(data);
+        });
+    },
 
     // pushes data to the server
     addDept: function (name) {
-        console.log(name)
-
         const queryString = `
-        INSERT INTO department (dep_name)
+        INSERT INTO department (name)
         VALUES (?)`
 
         connection.query(queryString, [name], (err, data) => {
             if (err) throw err;
-            console.log(data)
+            console.log(data);
         });
     },
 
