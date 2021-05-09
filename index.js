@@ -1,20 +1,20 @@
 const inquirer = require("inquirer");
-const orm = require("./config/orm.js")
-let deptArr = ["Marketing", "HR", "Sales"]
+const orm = require("./config/orm.js");
 //  roleArr, employeeArr;
 
 function init() {
-    // deptArr = orm.loadDept()
-    // console.log(deptArr)
-    // console.log(orm.loadDept())
+    deptArr = ['Sales', 'Marketing', 'HR'];
+    // orm.loadDept()
+    // console.log(deptArr);
+    
     inquirer.prompt([
         {
             type: "list",
-            message: "What up?",
+            message: "What would you like to do?",
             choices: [
-                "View All Departments",
-                "View All Roles",
-                "View All Employees",                
+                "View Departments",
+                "View Roles",
+                "View Employees",                
                 "Add Employee",
                 "Add Department",
                 "Add Role",
@@ -26,38 +26,41 @@ function init() {
     ]).then(({choice}) => {
         if(choice == "View Departments") {
             orm.viewDept();
-            init()
+            init();
         }
         else if(choice == "View Employees") {
             orm.viewEmp();
-            init()
+            init();
         }
         else if(choice == "View Roles") {
             orm.viewRoles();
-            init()
+            init();
         }
         else if (choice == "Add Role") {
             // calls function below to get the necessary data
             askRole();
+            
         }
         else if (choice == "Add Department") {
             // calls function below to get the necessary data
             askDept();
+            
         }
         else if (choice == "Add Employee") {
             // calls function below to get the necessary data
             askEmp();
+            
         }
         else if (choice == "Update Employee") {
             // calls function below to get the necessary data
             updateEmp();
+           
         }
-        else if (choice == "Exit"){
+        else if (choice === "EXIT"){
             process.exit();
         }
     })
-}
-
+};
 
 function askRole (){
     console.log(deptArr)
@@ -79,7 +82,9 @@ function askRole (){
     ]).then (res => {
         // passes the data to the orm file to make the server call and add the data
         orm.addRole(res.title, res.salary, deptArr.indexOf(res.departmentString) + 1)
+        init();
     })
+    
 };
 
 // update employee
@@ -90,11 +95,6 @@ function updateEmp(){
 
 // initialize app
 init()
-// 
-// 
-// 
-// 
-// 
 
 
 
@@ -103,12 +103,7 @@ init()
 function askEmp() {
     console.log("add employee")
     inquirer.prompt([
-        {
-            name: "id",
-            type: "input",
-            message: "What is the employee's id?"
-        },
-        {
+                {
             name: "fname",
             type: "input",
             message: "What is the employee's first name?"
@@ -121,40 +116,30 @@ function askEmp() {
         {
             name: "role",
             type: "input",
-            message: "What is the employee's role?"
-        },
-        {
-            name: "manid",
-            type: "input",
-            message: "What is the employee's manager's id?"
-        },
-    ]).then (res => {
+            message: "What is the employee's role id?"
+        }
+    ]).then(res => {
+        
         // passes the data to the orm file to make the server call and add the data
-        orm.addEmp(res.title, res.salary, deptArr.indexOf(res.departmentString) + 1)
-    })
+        orm.addEmp(res.fname, res.lname, res.role)
         init();
+    })
+        
     
 };
 
 // function to add departments
 function askDept() {
-    console.log("add department")
     inquirer.prompt([
-        {
-            name: "id",
-            type: "input",
-            message: "What is the department id?"
-        },
         {
             name: "name",
             type: "input",
             message: "What is the department name?"
-        },
-    ]).then(function({id, name}){
-        console.table({id, name});
-        connection.query("INSERT INTO employee_db.department VALUES ?", ("id", "name"), function (err, result) 
-        {if (err) throw err});
-        listPrompt();
+        }
+    ]).then (res => {
+        // passes the data to the orm file to make the server call and add the data
+        orm.addDept(res.name);
+        init();
     });
 };
 
@@ -187,7 +172,7 @@ function updateEmployeeRole() {
     ]).then(function(data){
         console.table(data);
         // connection.query('INSERT INTO role VALUES);
-        listPrompt();
+        
     });
 };
 
