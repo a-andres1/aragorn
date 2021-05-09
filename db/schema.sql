@@ -3,7 +3,8 @@ CREATE DATABASE employee_db;
 
 CREATE TABLE department (
     id INT AUTO_INCREMENT,
-    dep_name VARCHAR(30),
+    name VARCHAR(30),
+    INDEX ((data ->> $.name)),
     PRIMARY KEY (id)
 );
 
